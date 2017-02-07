@@ -3,8 +3,6 @@ require "pry"
 require_relative './functions.rb'
 enable :sessions
 
-
-
 # Calls different functions to see who won the round, tallys the appropriate scores
 # and to declares an overall winner if max store set by function is reached. 
 #
@@ -17,16 +15,13 @@ enable :sessions
 #
 # There is no Return for this function
 def process_picks()
-
 	session["round_winner"] = round_win(session["p1_pick"], session["p2_pick"])
-    session["increment_score"] = tally_score(session["round_winner"])
-    session["game_winner"] = the_winner(session["p1_total_score"],session["p2_total_score"])
-
+    tally_score(session["round_winner"])
+    session["game_winner"] = the_winner(session["p1_total_score"], session["p2_total_score"])
 end
 
 # Post Controller Clears and Sets different Session vars and resets the game
 post("/start"){ 
-
 	session.clear
 	session["p1_picked"] = "No"
 	session["show_p1_box"] = "Yes"
@@ -35,6 +30,7 @@ post("/start"){
 	erb :play
 	redirect "/"  
 }
+
 # Gets loads the page each time it's refreshed according to vars set by post("/start") and post("/")
 get ("/"){
 
@@ -46,6 +42,7 @@ get ("/"){
 
 	erb :play
 }
+
 # Sets the varialbes used by get("/"). The if statement sets variables for get("/") to show and hide specific 
 # boxes depending on game progression. Calls quality_control function to check if player input is allowed.
 post ("/") {

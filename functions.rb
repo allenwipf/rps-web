@@ -9,7 +9,7 @@ require "pry"
 # 	the_winner(3, 0)
 # 	# => "Game over! Player 1 wins!"
 # 
-# Returns winner annoucement related to who won
+# Returns winner annoucement String related to who won
 def the_winner(p1_score, p2_score)
 	if p1_score >= 3	
 		return "Game over! Player 1 wins!"	
@@ -53,18 +53,28 @@ end
 #   round_win("paper", "rock")
 #   # => "Player 1 wins this round!"
 # 
-# Returns a string that announces who the winner is
+# Returns a Integer of which player won. Returns 0 if a tie.
 def round_win(p1_answer, p2_answer)
 	if p1_answer == p2_answer
-		return "It's a tie! Try again!"
+		return 0
 	elsif p1_answer == "rock" and p2_answer == "paper"
-		return "Player 2 wins this round!"
+		return 2
 	elsif p1_answer == "scissors" and p2_answer == "rock"
-		return "Player 2 wins this round!"
+		return 2
 	elsif p1_answer == "paper" and p2_answer == "scissors"
-	 	return "Player 2 wins this round!"
+	 	return 2
 	else
+		return 1
+	end
+end
+
+def round_win_message(winner)
+	if winner == 1
 		return "Player 1 wins this round!"
+	elsif winner == 2
+		return "Player 2 wins this round!"
+	else
+		return "It's a tie! Try again!"
 	end
 end
 
@@ -78,12 +88,8 @@ end
 # 	# => Player1's score will be incremented by 1
 # 
 # There is no return
-def tally_score(winner)   
- 	if winner == "Player 1 wins this round!"
-		session["p1_total_score"] += 1
-	elsif winner == "Player 2 wins this round!"
-		session["p2_total_score"] += 1
-	end
+def tally_score(winner)
+	(session["p#{winner}_total_score"] += 1) unless (winner == 0)
 end 
 
 
