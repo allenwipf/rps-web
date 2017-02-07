@@ -4,6 +4,7 @@
 not hidden according to game progression -->
 
 <h2>Rock Paper Scissors</h2>
+
 <!-- shows the current score -->
 <div id="score_keeper">
 	<%= "Player 1 score: #{session["p1_total_score"]}"%>
@@ -12,40 +13,49 @@ not hidden according to game progression -->
 	<%= "Player 2 score: #{session["p2_total_score"]}"%>
 	<br>
 	<br>
+
 	<form action="/start" method="post">
 		<button type="sumbit" name="game_start">Start New Game</button>
 	</form>
 </div>	
-<!-- shows player1 input box if it's player1's turn. Else it's hidden -->
+
 <div <%= if(!@current_score.nil?) then ('hidden') end %>>
+
+	<!-- shows player1 input box if it's player1's turn. Else it's hidden -->
 	<div <%= if(session["show_p1_box"] != "Yes") then ('hidden') end %>>
 		<form action="/" method="post">
 			<h4>"Player 1, pick your weapon"</h4>
 			<input type="text" name="p1_pick"></input>
 			<button class="submit" type="submit" name="submit">Submit Weapon</button>
+
 			<% if session["p1_pick"] == "try_again" %>
 		     	<h3>That is not a valid entry...</h3>
 		    <%end %>
 		</form>
 	</div>
-<!-- shows player2 input box if it's player2's turn. Else it's hidden -->
+
+	<!-- shows player2 input box if it's player2's turn. Else it's hidden -->
 	<div <%= if(session["show_p1_box"] == "Yes") then ('hidden') end %>>
 		<form action="/" method="post">
 			<h4>"Player 2, pick your weapon"</h4>
 			<input type="text" name="p2_pick"></input>
 			<button class="submit" type="submit" name="submit">Submit Weapon</button>
+
 			<% if session["p2_pick"] == "try_again" %>
 		     <h3>That is not a valid entry...</h3>
 		    <%end %>	
 		</form>
 	</div>
+
 </div>
+
 <!-- announces round winner at end of round -->
 <% if @round_winner == nil %>
  	<p> </p>
 <% else %>
-	<h3> <%= @round_winner %> </h3>
+	<h3> <%= @round_win_message %> </h3>
 <% end %> 
+
 <!--  anncounces overall game winnder at end of game. -->
 <div id="declare_winner" <%= if(@current_score.nil?) then ('hidden') end %>>
 	<%= session["game_winner"] %>

@@ -33,11 +33,10 @@ post("/start"){
 
 # Gets loads the page each time it's refreshed according to vars set by post("/start") and post("/")
 get ("/"){
-
 	@round_winner = session["round_winner"]
+	@round_win_message = round_win_message(@round_winner)
 	session.delete("round_winner")
-	session["p1_total_score"]
-	session["p2_total_score"]
+	
 	@current_score = session["game_winner"]
 
 	erb :play
